@@ -1,0 +1,91 @@
+[package]
+name        = "aria-assistant"
+version     = "0.1.0"
+edition     = "2021"
+description = "ARIA — Autonomous Rust Intelligence Assistant"
+authors     = ["you"]
+
+[[bin]]
+name = "aria"
+path = "src/main.rs"
+
+[lib]
+name = "aria_lib"
+path = "src/lib.rs"
+
+# ─── Runtime ──────────────────────────────────────────────────────────────────
+[dependencies]
+tokio          = { version = "1", features = ["full"] }
+tokio-stream   = "0.1"
+async-trait    = "0.1"
+futures        = "0.3"
+
+# ─── Serialização ─────────────────────────────────────────────────────────────
+serde          = { version = "1", features = ["derive"] }
+serde_json     = "1"
+toml           = "0.8"
+
+# ─── HTTP (Ollama + Qdrant + plugins) ─────────────────────────────────────────
+reqwest        = { version = "0.12", features = ["json", "stream"] }
+bytes          = "1"
+urlencoding    = "2"
+
+# ─── STT — Whisper ────────────────────────────────────────────────────────────
+whisper-rs     = { version = "0.11", features = ["vulkan"] }
+
+# ─── TTS — Piper (subprocess) + playback ────────────────────────────────────
+rodio          = "0.19"
+hound          = "3"
+
+# ─── Captura de áudio ─────────────────────────────────────────────────────────
+cpal           = "0.15"
+
+# ─── Banco de dados relacional ────────────────────────────────────────────────
+rusqlite       = { version = "0.31", features = ["bundled"] }
+
+# ─── Captura de tela + processamento de imagem ───────────────────────────────
+image          = "0.25"
+base64         = "0.22"
+screenshots    = "0.8"
+
+# ─── Sistema Linux ────────────────────────────────────────────────────────────
+sysinfo        = "0.30"
+nix            = { version = "0.28", features = ["process", "signal"] }
+
+# ─── TUI ──────────────────────────────────────────────────────────────────────
+ratatui        = "0.27"
+crossterm      = { version = "0.27", features = ["event-stream"] }
+
+# ─── Logging & erros ──────────────────────────────────────────────────────────
+tracing            = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow             = "1"
+thiserror          = "1"
+
+# ─── CLI & Config ─────────────────────────────────────────────────────────────
+clap           = { version = "4", features = ["derive"] }
+dirs           = "5"
+shellexpand    = "3"
+
+# ─── Terminal & output ────────────────────────────────────────────────────────
+colored        = "2"
+indicatif      = "0.17"
+
+# ─── Utilitários ──────────────────────────────────────────────────────────────
+uuid           = { version = "1", features = ["v4"] }
+chrono         = { version = "0.4", features = ["serde"] }
+dashmap        = "5"
+crossbeam-channel = "0.5"
+tokio-util     = { version = "0.7", features = ["codec"] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[profile.release]
+opt-level     = 3
+lto           = true
+codegen-units = 1
+strip         = true
+
+[profile.dev]
+opt-level = 1
